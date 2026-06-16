@@ -403,13 +403,14 @@ inline void SET_UINT16(std::uint8_t* buf, const std::uint16_t val)
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_16_ALIGNED(std::uintptr_t(buf)))
     {
-        (*(std::uint16_t*)buf) = val;
+        std::memcpy(buf, &val, sizeof(val));
         return;
     }
 #    else
     if(IS_16_ALIGNED(std::uintptr_t(buf)))
     {
-        (*(std::uint16_t*)buf) = bswap_16(val);
+        uint16_t output = bswap_16(val);
+        std::memcpy(buf, &output, sizeof(output));
         return;
     }
 #    endif
@@ -429,13 +430,14 @@ inline void SET_UINT32(std::uint8_t* buf, const std::uint32_t val)
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_32_ALIGNED(std::uintptr_t(buf)))
     {
-        (*(std::uint32_t*)buf) = val;
+        std::memcpy(buf, &val, sizeof(val));
         return;
     }
 #    else
     if(IS_32_ALIGNED(std::uintptr_t(buf)))
     {
-        (*(std::uint32_t*)buf) = bswap_32(val);
+        uint32_t output = bswap_32(val);
+        std::memcpy(buf, &output, sizeof(output));
         return;
     }
 #    endif
@@ -473,13 +475,14 @@ inline void SET_UINT64(std::uint8_t* buf, const std::uint64_t val)
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
     {
-        (*(std::uint64_t*)buf) = val;
+        std::memcpy(buf, &val, sizeof(val));
         return;
     }
 #    else
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
     {
-        (*(std::uint64_t*)buf) = bswap_64(val);
+        uint64_t output = bswap_64(val);
+        std::memcpy(buf, &output, sizeof(output));
         return;
     }
 #    endif
