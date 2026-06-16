@@ -988,8 +988,7 @@ inline std::uint64_t GET_UINT64(const char* buf)
  */
 inline int8_t GET_INT8(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int8_t*>(&value);
+    return GET_INT8(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -999,8 +998,7 @@ inline int8_t GET_INT8(const char* buf)
  */
 inline int16_t GET_INT16(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int16_t*>(&value);
+    return GET_INT16(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -1010,8 +1008,7 @@ inline int16_t GET_INT16(const char* buf)
  */
 inline int32_t GET_INT32(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int32_t*>(&value);
+    return GET_INT32(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -1022,8 +1019,7 @@ inline int32_t GET_INT32(const char* buf)
  */
 inline int64_t GET_INT48(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int64_t*>(&value);
+    return GET_INT48(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -1033,8 +1029,7 @@ inline int64_t GET_INT48(const char* buf)
  */
 inline int64_t GET_INT64(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int64_t*>(&value);
+    return GET_INT64(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -1044,8 +1039,7 @@ inline int64_t GET_INT64(const char* buf)
  */
 inline float GET_FLOAT32(const char* buf)
 {
-    const std::uint32_t value = GET_UINT32(buf);
-    return *reinterpret_cast<const float*>(&value);
+    return GET_FLOAT32(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -1055,8 +1049,7 @@ inline float GET_FLOAT32(const char* buf)
  */
 inline double GET_FLOAT64(const char* buf)
 {
-    const std::uint64_t value = GET_UINT64(buf);
-    return *reinterpret_cast<const double*>(&value);
+    return GET_FLOAT64(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
