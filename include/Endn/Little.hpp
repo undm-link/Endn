@@ -55,7 +55,7 @@ inline std::uint16_t GET_UINT16(const std::uint8_t* buf)
         return std::uint16_t(*reinterpret_cast<const std::uint16_t*>(buf));
 #    endif
 #endif
-    return ((std::uint16_t)buf[1] << 8) | ((std::uint16_t)buf[0]);
+    return (static_cast<std::uint16_t>(buf[1]) << 8) | (static_cast<std::uint16_t>(buf[0]));
 }
 
 /**
@@ -74,7 +74,7 @@ inline std::uint32_t GET_UINT32(const std::uint8_t* buf)
         return std::uint32_t(*reinterpret_cast<const std::uint32_t*>(buf));
 #    endif
 #endif
-    return ((std::uint32_t)buf[3] << 24) | ((std::uint32_t)buf[2] << 16) | ((std::uint32_t)buf[1] << 8) | ((std::uint32_t)buf[0]);
+    return (static_cast<std::uint32_t>(buf[3]) << 24) | (static_cast<std::uint32_t>(buf[2]) << 16) | (static_cast<std::uint32_t>(buf[1]) << 8) | (static_cast<std::uint32_t>(buf[0]));
 }
 
 /**
@@ -94,8 +94,8 @@ inline std::uint64_t GET_UINT48(const std::uint8_t* buf)
         return std::uint64_t(*reinterpret_cast<const std::uint64_t*>(buf) & std::uint64_t(0xFFFFFFFFFFFF));
 #    endif
 #endif
-    return ((std::uint64_t)buf[5] << 40) | ((std::uint64_t)buf[4] << 32) | ((std::uint64_t)buf[3] << 24) | ((std::uint64_t)buf[2] << 16)
-           | ((std::uint64_t)buf[1] << 8) | ((std::uint64_t)buf[0]);
+    return (static_cast<std::uint64_t>(buf[5]) << 40) | (static_cast<std::uint64_t>(buf[4]) << 32) | (static_cast<std::uint64_t>(buf[3]) << 24) | (static_cast<std::uint64_t>(buf[2]) << 16)
+           | (static_cast<std::uint64_t>(buf[1]) << 8) | (static_cast<std::uint64_t>(buf[0]));
 }
 
 /**
@@ -114,8 +114,8 @@ inline std::uint64_t GET_UINT64(const std::uint8_t* buf)
         return std::uint64_t(*reinterpret_cast<const std::uint64_t*>(buf));
 #    endif
 #endif
-    return ((std::uint64_t)buf[7] << 56) | ((std::uint64_t)buf[6] << 48) | ((std::uint64_t)buf[5] << 40) | ((std::uint64_t)buf[4] << 32)
-           | ((std::uint64_t)buf[3] << 24) | ((std::uint64_t)buf[2] << 16) | ((std::uint64_t)buf[1] << 8) | ((std::uint64_t)buf[0]);
+    return (static_cast<std::uint64_t>(buf[7]) << 56) | (static_cast<std::uint64_t>(buf[6]) << 48) | (static_cast<std::uint64_t>(buf[5]) << 40) | (static_cast<std::uint64_t>(buf[4]) << 32)
+           | (static_cast<std::uint64_t>(buf[3]) << 24) | (static_cast<std::uint64_t>(buf[2]) << 16) | (static_cast<std::uint64_t>(buf[1]) << 8) | (static_cast<std::uint64_t>(buf[0]));
 }
 
 /**
@@ -449,7 +449,7 @@ inline void SET_UINT64(std::uint8_t* buf, const std::uint64_t val)
  */
 inline void SET_INT8(std::uint8_t* buf, const int8_t val)
 {
-    SET_UINT8(buf, *(const std::uint8_t*)&val);
+    SET_UINT8(buf, *reinterpret_cast<const std::uint8_t*>(&val));
 }
 
 /**
@@ -459,7 +459,7 @@ inline void SET_INT8(std::uint8_t* buf, const int8_t val)
  */
 inline void SET_INT16(std::uint8_t* buf, const int16_t val)
 {
-    SET_UINT16(buf, *(const std::uint16_t*)&val);
+    SET_UINT16(buf, *reinterpret_cast<const std::uint16_t*>(&val));
 }
 
 /**
@@ -469,7 +469,7 @@ inline void SET_INT16(std::uint8_t* buf, const int16_t val)
  */
 inline void SET_INT32(std::uint8_t* buf, const int32_t val)
 {
-    SET_UINT32(buf, *(const std::uint32_t*)&val);
+    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
 }
 
 /**
@@ -480,7 +480,7 @@ inline void SET_INT32(std::uint8_t* buf, const int32_t val)
  */
 inline void SET_INT48(std::uint8_t* buf, const int64_t val)
 {
-    SET_UINT48(buf, *(const std::uint64_t*)&val);
+    SET_UINT48(buf, *reinterpret_cast<const std::uint64_t*>(&val));
 }
 
 /**
@@ -490,7 +490,7 @@ inline void SET_INT48(std::uint8_t* buf, const int64_t val)
  */
 inline void SET_INT64(std::uint8_t* buf, const int64_t val)
 {
-    SET_UINT64(buf, *(const std::uint64_t*)&val);
+    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
 }
 
 /**
@@ -500,7 +500,7 @@ inline void SET_INT64(std::uint8_t* buf, const int64_t val)
  */
 inline void SET_FLOAT32(std::uint8_t* buf, const float val)
 {
-    SET_UINT32(buf, *(const std::uint32_t*)&val);
+    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
 }
 
 /**
@@ -510,7 +510,7 @@ inline void SET_FLOAT32(std::uint8_t* buf, const float val)
  */
 inline void SET_FLOAT64(std::uint8_t* buf, const double val)
 {
-    SET_UINT64(buf, *(const std::uint64_t*)&val);
+    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
 }
 
 /**
@@ -930,7 +930,7 @@ inline std::uint64_t GET_UINT64(const char* buf)
 inline int8_t GET_INT8(const char* buf)
 {
     const std::uint8_t value = GET_UINT8(buf);
-    return *(int8_t*)(&value);
+    return *reinterpret_cast<const int8_t*>(&value);
 }
 
 /**
@@ -941,7 +941,7 @@ inline int8_t GET_INT8(const char* buf)
 inline int16_t GET_INT16(const char* buf)
 {
     const std::uint8_t value = GET_UINT8(buf);
-    return *(int16_t*)(&value);
+    return *reinterpret_cast<const int16_t*>(&value);
 }
 
 /**
@@ -952,7 +952,7 @@ inline int16_t GET_INT16(const char* buf)
 inline int32_t GET_INT32(const char* buf)
 {
     const std::uint8_t value = GET_UINT8(buf);
-    return *(int32_t*)(&value);
+    return *reinterpret_cast<const int32_t*>(&value);
 }
 
 /**
@@ -964,7 +964,7 @@ inline int32_t GET_INT32(const char* buf)
 inline int64_t GET_INT48(const char* buf)
 {
     const std::uint8_t value = GET_UINT8(buf);
-    return *(int64_t*)(&value);
+    return *reinterpret_cast<const int64_t*>(&value);
 }
 
 /**
@@ -975,7 +975,7 @@ inline int64_t GET_INT48(const char* buf)
 inline int64_t GET_INT64(const char* buf)
 {
     const std::uint8_t value = GET_UINT8(buf);
-    return *(int64_t*)(&value);
+    return *reinterpret_cast<const int64_t*>(&value);
 }
 
 /**
@@ -986,7 +986,7 @@ inline int64_t GET_INT64(const char* buf)
 inline float GET_FLOAT32(const char* buf)
 {
     const std::uint32_t value = GET_UINT32(buf);
-    return *(float*)(&value);
+    return *reinterpret_cast<const float*>(&value);
 }
 
 /**
@@ -997,7 +997,7 @@ inline float GET_FLOAT32(const char* buf)
 inline double GET_FLOAT64(const char* buf)
 {
     const std::uint64_t value = GET_UINT64(buf);
-    return *(double*)(&value);
+    return *reinterpret_cast<const double*>(&value);
 }
 
 /**
@@ -1141,7 +1141,7 @@ inline double GET_FLOAT64(const char* buf, const std::size_t offset)
  */
 inline void SET_UINT8(char* buf, const std::uint8_t val)
 {
-    SET_UINT8((std::uint8_t*)buf, *(const std::uint8_t*)&val);
+    SET_UINT8(reinterpret_cast<std::uint8_t*>(buf), *reinterpret_cast<const std::uint8_t*>(&val));
 }
 
 /**
@@ -1151,7 +1151,7 @@ inline void SET_UINT8(char* buf, const std::uint8_t val)
  */
 inline void SET_UINT16(char* buf, const std::uint16_t val)
 {
-    SET_UINT16((std::uint8_t*)buf, *(const std::uint16_t*)&val);
+    SET_UINT16(reinterpret_cast<std::uint8_t*>(buf), *reinterpret_cast<const std::uint16_t*>(&val));
 }
 
 /**
@@ -1161,7 +1161,7 @@ inline void SET_UINT16(char* buf, const std::uint16_t val)
  */
 inline void SET_UINT32(char* buf, const std::uint32_t val)
 {
-    SET_UINT32((std::uint8_t*)buf, *(const std::uint32_t*)&val);
+    SET_UINT32(reinterpret_cast<std::uint8_t*>(buf), *reinterpret_cast<const std::uint32_t*>(&val));
 }
 
 /**
@@ -1172,7 +1172,7 @@ inline void SET_UINT32(char* buf, const std::uint32_t val)
  */
 inline void SET_UINT48(char* buf, const std::uint64_t val)
 {
-    SET_UINT48((std::uint8_t*)buf, *(const std::uint64_t*)&val);
+    SET_UINT48(reinterpret_cast<std::uint8_t*>(buf), *reinterpret_cast<const std::uint64_t*>(&val));
 }
 
 /**
@@ -1182,7 +1182,7 @@ inline void SET_UINT48(char* buf, const std::uint64_t val)
  */
 inline void SET_UINT64(char* buf, const std::uint64_t val)
 {
-    SET_UINT64((std::uint8_t*)buf, *(const std::uint64_t*)&val);
+    SET_UINT64(reinterpret_cast<std::uint8_t*>(buf), *reinterpret_cast<const std::uint64_t*>(&val));
 }
 
 /**
@@ -1192,7 +1192,7 @@ inline void SET_UINT64(char* buf, const std::uint64_t val)
  */
 inline void SET_INT8(char* buf, const int8_t val)
 {
-    SET_UINT8(buf, *(const std::uint8_t*)&val);
+    SET_UINT8(buf, *reinterpret_cast<const std::uint8_t*>(&val));
 }
 
 /**
@@ -1202,7 +1202,7 @@ inline void SET_INT8(char* buf, const int8_t val)
  */
 inline void SET_INT16(char* buf, const int16_t val)
 {
-    SET_UINT16(buf, *(const std::uint16_t*)&val);
+    SET_UINT16(buf, *reinterpret_cast<const std::uint16_t*>(&val));
 }
 
 /**
@@ -1212,7 +1212,7 @@ inline void SET_INT16(char* buf, const int16_t val)
  */
 inline void SET_INT32(char* buf, const int32_t val)
 {
-    SET_UINT32(buf, *(const std::uint32_t*)&val);
+    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
 }
 
 /**
@@ -1223,7 +1223,7 @@ inline void SET_INT32(char* buf, const int32_t val)
  */
 inline void SET_INT48(char* buf, const int64_t val)
 {
-    SET_UINT48(buf, *(const std::uint64_t*)&val);
+    SET_UINT48(buf, *reinterpret_cast<const std::uint64_t*>(&val));
 }
 
 /**
@@ -1233,7 +1233,7 @@ inline void SET_INT48(char* buf, const int64_t val)
  */
 inline void SET_INT64(char* buf, const int64_t val)
 {
-    SET_UINT64(buf, *(const std::uint64_t*)&val);
+    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
 }
 
 /**
@@ -1243,7 +1243,7 @@ inline void SET_INT64(char* buf, const int64_t val)
  */
 inline void SET_FLOAT32(char* buf, const float val)
 {
-    SET_UINT32(buf, *(const std::uint32_t*)&val);
+    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
 }
 
 /**
@@ -1253,7 +1253,7 @@ inline void SET_FLOAT32(char* buf, const float val)
  */
 inline void SET_FLOAT64(char* buf, const double val)
 {
-    SET_UINT64(buf, *(const std::uint64_t*)&val);
+    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
 }
 
 /**
