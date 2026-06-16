@@ -504,7 +504,7 @@ inline void SET_UINT64(std::uint8_t* buf, const std::uint64_t val)
  */
 inline void SET_INT8(std::uint8_t* buf, const int8_t val)
 {
-    SET_UINT8(buf, *(const std::uint8_t*)&val);
+    SET_UINT8(buf, val);
 }
 
 /**
@@ -514,7 +514,7 @@ inline void SET_INT8(std::uint8_t* buf, const int8_t val)
  */
 inline void SET_INT16(std::uint8_t* buf, const int16_t val)
 {
-    SET_UINT16(buf, *(const std::uint16_t*)&val);
+    SET_UINT16(buf, val);
 }
 
 /**
@@ -524,7 +524,7 @@ inline void SET_INT16(std::uint8_t* buf, const int16_t val)
  */
 inline void SET_INT32(std::uint8_t* buf, const int32_t val)
 {
-    SET_UINT32(buf, *(const std::uint32_t*)&val);
+    SET_UINT32(buf, val);
 }
 
 /**
@@ -535,7 +535,7 @@ inline void SET_INT32(std::uint8_t* buf, const int32_t val)
  */
 inline void SET_INT48(std::uint8_t* buf, const int64_t val)
 {
-    SET_UINT48(buf, *(const std::uint64_t*)&val);
+    SET_UINT48(buf, val);
 }
 
 /**
@@ -545,7 +545,7 @@ inline void SET_INT48(std::uint8_t* buf, const int64_t val)
  */
 inline void SET_INT64(std::uint8_t* buf, const int64_t val)
 {
-    SET_UINT64(buf, *(const std::uint64_t*)&val);
+    SET_UINT64(buf, val);
 }
 
 /**
