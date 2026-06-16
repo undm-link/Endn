@@ -555,7 +555,9 @@ inline void SET_INT64(std::uint8_t* buf, const int64_t val)
  */
 inline void SET_FLOAT32(std::uint8_t* buf, const float val)
 {
-    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
+    uint32_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT32(buf, arg);
 }
 
 /**
@@ -565,7 +567,9 @@ inline void SET_FLOAT32(std::uint8_t* buf, const float val)
  */
 inline void SET_FLOAT64(std::uint8_t* buf, const double val)
 {
-    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT64(buf, arg);
 }
 
 /**
@@ -1247,7 +1251,9 @@ inline void SET_UINT64(char* buf, const std::uint64_t val)
  */
 inline void SET_INT8(char* buf, const int8_t val)
 {
-    SET_UINT8(buf, *reinterpret_cast<const std::uint8_t*>(&val));
+    uint8_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT8(buf, arg);
 }
 
 /**
@@ -1257,7 +1263,9 @@ inline void SET_INT8(char* buf, const int8_t val)
  */
 inline void SET_INT16(char* buf, const int16_t val)
 {
-    SET_UINT16(buf, *reinterpret_cast<const std::uint16_t*>(&val));
+    uint16_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT16(buf, arg);
 }
 
 /**
@@ -1267,7 +1275,9 @@ inline void SET_INT16(char* buf, const int16_t val)
  */
 inline void SET_INT32(char* buf, const int32_t val)
 {
-    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
+    uint32_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT32(buf, arg);
 }
 
 /**
@@ -1278,7 +1288,9 @@ inline void SET_INT32(char* buf, const int32_t val)
  */
 inline void SET_INT48(char* buf, const int64_t val)
 {
-    SET_UINT48(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT48(buf, arg);
 }
 
 /**
@@ -1288,7 +1300,9 @@ inline void SET_INT48(char* buf, const int64_t val)
  */
 inline void SET_INT64(char* buf, const int64_t val)
 {
-    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT64(buf, arg);
 }
 
 /**
@@ -1298,7 +1312,9 @@ inline void SET_INT64(char* buf, const int64_t val)
  */
 inline void SET_FLOAT32(char* buf, const float val)
 {
-    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
+    uint32_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT32(buf, arg);
 }
 
 /**
@@ -1308,7 +1324,9 @@ inline void SET_FLOAT32(char* buf, const float val)
  */
 inline void SET_FLOAT64(char* buf, const double val)
 {
-    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT64(buf, arg);
 }
 
 /**
