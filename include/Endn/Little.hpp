@@ -106,14 +106,14 @@ inline std::uint64_t GET_UINT48(const std::uint8_t* buf)
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
     {
         uint64_t output = 0;
-        std::memcpy(&output, buf, sizeof(output));
+        std::memcpy(&output, buf, 6);
         return bswap_64(output << 16) & std::uint64_t(0x0000FFFFFFFFFFFF);
     }
 #    else
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
     {
         uint64_t output = 0;
-        std::memcpy(&output, buf, sizeof(output));
+        std::memcpy(&output, buf, 6);
         return output & std::uint64_t(0xFFFFFFFFFFFF);
     }
 #    endif
