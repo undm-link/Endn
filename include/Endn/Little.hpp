@@ -49,10 +49,18 @@ inline std::uint16_t GET_UINT16(const std::uint8_t* buf)
 #ifdef ENDN_ENABLE_BSWAP
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_16_ALIGNED(std::uintptr_t(buf)))
-        return bswap_16(*reinterpret_cast<const std::uint16_t*>(buf));
+    {
+        uint16_t output;
+        std::memcpy(&output, buf, sizeof(output));
+        return bswap_16(output);
+    }
 #    else
     if(IS_16_ALIGNED(std::uintptr_t(buf)))
-        return std::uint16_t(*reinterpret_cast<const std::uint16_t*>(buf));
+    {
+        uint16_t output;
+        std::memcpy(&output, buf, sizeof(output));
+        return output;
+    }
 #    endif
 #endif
     return (static_cast<std::uint16_t>(buf[1]) << 8) | (static_cast<std::uint16_t>(buf[0]));
@@ -68,10 +76,18 @@ inline std::uint32_t GET_UINT32(const std::uint8_t* buf)
 #ifdef ENDN_ENABLE_BSWAP
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_32_ALIGNED(std::uintptr_t(buf)))
-        return bswap_32(*reinterpret_cast<const std::uint32_t*>(buf));
+    {
+        uint32_t output;
+        std::memcpy(&output, buf, sizeof(output));
+        return bswap_32(output);
+    }
 #    else
     if(IS_32_ALIGNED(std::uintptr_t(buf)))
-        return std::uint32_t(*reinterpret_cast<const std::uint32_t*>(buf));
+    {
+        uint32_t output;
+        std::memcpy(&output, buf, sizeof(output));
+        return output;
+    }
 #    endif
 #endif
     return (static_cast<std::uint32_t>(buf[3]) << 24) | (static_cast<std::uint32_t>(buf[2]) << 16) | (static_cast<std::uint32_t>(buf[1]) << 8) | (static_cast<std::uint32_t>(buf[0]));
@@ -88,10 +104,18 @@ inline std::uint64_t GET_UINT48(const std::uint8_t* buf)
 #ifdef ENDN_ENABLE_BSWAP
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
-        return bswap_64(*reinterpret_cast<const std::uint64_t*>(buf) << 16) & std::uint64_t(0x0000FFFFFFFFFFFF);
+    {
+        uint64_t output = 0;
+        std::memcpy(&output, buf, 6);
+        return bswap_64(output << 16) & std::uint64_t(0x0000FFFFFFFFFFFF);
+    }
 #    else
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
-        return std::uint64_t(*reinterpret_cast<const std::uint64_t*>(buf) & std::uint64_t(0xFFFFFFFFFFFF));
+    {
+        uint64_t output = 0;
+        std::memcpy(&output, buf, 6);
+        return output & std::uint64_t(0xFFFFFFFFFFFF);
+    }
 #    endif
 #endif
     return (static_cast<std::uint64_t>(buf[5]) << 40) | (static_cast<std::uint64_t>(buf[4]) << 32) | (static_cast<std::uint64_t>(buf[3]) << 24) | (static_cast<std::uint64_t>(buf[2]) << 16)
@@ -108,10 +132,18 @@ inline std::uint64_t GET_UINT64(const std::uint8_t* buf)
 #ifdef ENDN_ENABLE_BSWAP
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
-        return bswap_64(*reinterpret_cast<const std::uint64_t*>(buf));
+    {
+        uint64_t output;
+        std::memcpy(&output, buf, sizeof(output));
+        return bswap_64(output);
+    }
 #    else
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
-        return std::uint64_t(*reinterpret_cast<const std::uint64_t*>(buf));
+    {
+        uint64_t output;
+        std::memcpy(&output, buf, sizeof(output));
+        return output;
+    }
 #    endif
 #endif
     return (static_cast<std::uint64_t>(buf[7]) << 56) | (static_cast<std::uint64_t>(buf[6]) << 48) | (static_cast<std::uint64_t>(buf[5]) << 40) | (static_cast<std::uint64_t>(buf[4]) << 32)
@@ -126,7 +158,9 @@ inline std::uint64_t GET_UINT64(const std::uint8_t* buf)
 inline int8_t GET_INT8(const std::uint8_t* buf)
 {
     const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int8_t*>(&value);
+    std::int8_t output;
+    std::memcpy(&output, &value, sizeof(value));
+    return output;
 }
 
 /**
@@ -136,8 +170,10 @@ inline int8_t GET_INT8(const std::uint8_t* buf)
  */
 inline int16_t GET_INT16(const std::uint8_t* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int16_t*>(&value);
+    const std::uint16_t value = GET_UINT16(buf);
+    std::int16_t output;
+    std::memcpy(&output, &value, sizeof(value));
+    return output;
 }
 
 /**
@@ -147,8 +183,10 @@ inline int16_t GET_INT16(const std::uint8_t* buf)
  */
 inline int32_t GET_INT32(const std::uint8_t* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int32_t*>(&value);
+    const std::uint32_t value = GET_UINT32(buf);
+    std::int32_t output;
+    std::memcpy(&output, &value, sizeof(value));
+    return output;
 }
 
 /**
@@ -159,8 +197,10 @@ inline int32_t GET_INT32(const std::uint8_t* buf)
  */
 inline int64_t GET_INT48(const std::uint8_t* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int64_t*>(&value);
+    const std::uint64_t value = GET_UINT48(buf);
+    std::int64_t output;
+    std::memcpy(&output, &value, sizeof(value));
+    return output;
 }
 
 /**
@@ -170,8 +210,10 @@ inline int64_t GET_INT48(const std::uint8_t* buf)
  */
 inline int64_t GET_INT64(const std::uint8_t* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int64_t*>(&value);
+    const std::uint64_t value = GET_UINT64(buf);
+    std::int64_t output;
+    std::memcpy(&output, &value, sizeof(value));
+    return output;
 }
 
 /**
@@ -182,7 +224,9 @@ inline int64_t GET_INT64(const std::uint8_t* buf)
 inline float GET_FLOAT32(const std::uint8_t* buf)
 {
     const std::uint32_t value = GET_UINT32(buf);
-    return *reinterpret_cast<const float*>(&value);
+    float output;
+    std::memcpy(&output, &value, sizeof(value));
+    return output;
 }
 
 /**
@@ -193,7 +237,9 @@ inline float GET_FLOAT32(const std::uint8_t* buf)
 inline double GET_FLOAT64(const std::uint8_t* buf)
 {
     const std::uint64_t value = GET_UINT64(buf);
-    return *reinterpret_cast<const double*>(&value);
+    double output;
+    std::memcpy(&output, &value, sizeof(value));
+    return output;
 }
 
 /**
@@ -351,13 +397,14 @@ inline void SET_UINT16(std::uint8_t* buf, const std::uint16_t val)
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_16_ALIGNED(std::uintptr_t(buf)))
     {
-        (*reinterpret_cast<std::uint16_t*>(buf)) = bswap_16(val);
+        uint16_t output = bswap_16(val);
+        std::memcpy(buf, &output, sizeof(output));
         return;
     }
 #    else
     if(IS_16_ALIGNED(std::uintptr_t(buf)))
     {
-        (*reinterpret_cast<std::uint16_t*>(buf)) = val;
+        std::memcpy(buf, &val, sizeof(val));
         return;
     }
 #    endif
@@ -377,13 +424,14 @@ inline void SET_UINT32(std::uint8_t* buf, const std::uint32_t val)
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_32_ALIGNED(std::uintptr_t(buf)))
     {
-        (*reinterpret_cast<std::uint32_t*>(buf)) = bswap_32(val);
+        uint32_t output = bswap_32(val);
+        std::memcpy(buf, &output, sizeof(output));
         return;
     }
 #    else
     if(IS_32_ALIGNED(std::uintptr_t(buf)))
     {
-        (*reinterpret_cast<std::uint32_t*>(buf)) = val;
+        std::memcpy(buf, &val, sizeof(val));
         return;
     }
 #    endif
@@ -421,13 +469,14 @@ inline void SET_UINT64(std::uint8_t* buf, const std::uint64_t val)
 #    ifdef ENDN_IS_BIG_ENDIAN
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
     {
-        (*reinterpret_cast<std::uint64_t*>(buf)) = bswap_64(val);
+        uint64_t output = bswap_64(val);
+        std::memcpy(buf, &output, sizeof(output));
         return;
     }
 #    else
     if(IS_64_ALIGNED(std::uintptr_t(buf)))
     {
-        (*reinterpret_cast<std::uint64_t*>(buf)) = val;
+        std::memcpy(buf, &val, sizeof(val));
         return;
     }
 #    endif
@@ -449,7 +498,9 @@ inline void SET_UINT64(std::uint8_t* buf, const std::uint64_t val)
  */
 inline void SET_INT8(std::uint8_t* buf, const int8_t val)
 {
-    SET_UINT8(buf, *reinterpret_cast<const std::uint8_t*>(&val));
+    uint8_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT8(buf, arg);
 }
 
 /**
@@ -459,7 +510,9 @@ inline void SET_INT8(std::uint8_t* buf, const int8_t val)
  */
 inline void SET_INT16(std::uint8_t* buf, const int16_t val)
 {
-    SET_UINT16(buf, *reinterpret_cast<const std::uint16_t*>(&val));
+    uint16_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT16(buf, arg);
 }
 
 /**
@@ -469,7 +522,9 @@ inline void SET_INT16(std::uint8_t* buf, const int16_t val)
  */
 inline void SET_INT32(std::uint8_t* buf, const int32_t val)
 {
-    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
+    uint32_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT32(buf, arg);
 }
 
 /**
@@ -480,7 +535,9 @@ inline void SET_INT32(std::uint8_t* buf, const int32_t val)
  */
 inline void SET_INT48(std::uint8_t* buf, const int64_t val)
 {
-    SET_UINT48(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT48(buf, arg);
 }
 
 /**
@@ -490,7 +547,9 @@ inline void SET_INT48(std::uint8_t* buf, const int64_t val)
  */
 inline void SET_INT64(std::uint8_t* buf, const int64_t val)
 {
-    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT64(buf, arg);
 }
 
 /**
@@ -500,7 +559,9 @@ inline void SET_INT64(std::uint8_t* buf, const int64_t val)
  */
 inline void SET_FLOAT32(std::uint8_t* buf, const float val)
 {
-    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
+    uint32_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT32(buf, arg);
 }
 
 /**
@@ -510,7 +571,9 @@ inline void SET_FLOAT32(std::uint8_t* buf, const float val)
  */
 inline void SET_FLOAT64(std::uint8_t* buf, const double val)
 {
-    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT64(buf, arg);
 }
 
 /**
@@ -929,8 +992,7 @@ inline std::uint64_t GET_UINT64(const char* buf)
  */
 inline int8_t GET_INT8(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int8_t*>(&value);
+    return GET_INT8(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -940,8 +1002,7 @@ inline int8_t GET_INT8(const char* buf)
  */
 inline int16_t GET_INT16(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int16_t*>(&value);
+    return GET_INT16(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -951,8 +1012,7 @@ inline int16_t GET_INT16(const char* buf)
  */
 inline int32_t GET_INT32(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int32_t*>(&value);
+    return GET_INT32(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -963,8 +1023,7 @@ inline int32_t GET_INT32(const char* buf)
  */
 inline int64_t GET_INT48(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int64_t*>(&value);
+    return GET_INT48(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -974,8 +1033,7 @@ inline int64_t GET_INT48(const char* buf)
  */
 inline int64_t GET_INT64(const char* buf)
 {
-    const std::uint8_t value = GET_UINT8(buf);
-    return *reinterpret_cast<const int64_t*>(&value);
+    return GET_INT64(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -985,8 +1043,7 @@ inline int64_t GET_INT64(const char* buf)
  */
 inline float GET_FLOAT32(const char* buf)
 {
-    const std::uint32_t value = GET_UINT32(buf);
-    return *reinterpret_cast<const float*>(&value);
+    return GET_FLOAT32(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -996,8 +1053,7 @@ inline float GET_FLOAT32(const char* buf)
  */
 inline double GET_FLOAT64(const char* buf)
 {
-    const std::uint64_t value = GET_UINT64(buf);
-    return *reinterpret_cast<const double*>(&value);
+    return GET_FLOAT64(reinterpret_cast<const uint8_t*>(buf));
 }
 
 /**
@@ -1192,7 +1248,9 @@ inline void SET_UINT64(char* buf, const std::uint64_t val)
  */
 inline void SET_INT8(char* buf, const int8_t val)
 {
-    SET_UINT8(buf, *reinterpret_cast<const std::uint8_t*>(&val));
+    uint8_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT8(buf, arg);
 }
 
 /**
@@ -1202,7 +1260,9 @@ inline void SET_INT8(char* buf, const int8_t val)
  */
 inline void SET_INT16(char* buf, const int16_t val)
 {
-    SET_UINT16(buf, *reinterpret_cast<const std::uint16_t*>(&val));
+    uint16_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT16(buf, arg);
 }
 
 /**
@@ -1212,7 +1272,9 @@ inline void SET_INT16(char* buf, const int16_t val)
  */
 inline void SET_INT32(char* buf, const int32_t val)
 {
-    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
+    uint32_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT32(buf, arg);
 }
 
 /**
@@ -1223,7 +1285,9 @@ inline void SET_INT32(char* buf, const int32_t val)
  */
 inline void SET_INT48(char* buf, const int64_t val)
 {
-    SET_UINT48(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT48(buf, arg);
 }
 
 /**
@@ -1233,7 +1297,9 @@ inline void SET_INT48(char* buf, const int64_t val)
  */
 inline void SET_INT64(char* buf, const int64_t val)
 {
-    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT64(buf, arg);
 }
 
 /**
@@ -1243,7 +1309,9 @@ inline void SET_INT64(char* buf, const int64_t val)
  */
 inline void SET_FLOAT32(char* buf, const float val)
 {
-    SET_UINT32(buf, *reinterpret_cast<const std::uint32_t*>(&val));
+    uint32_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT32(buf, arg);
 }
 
 /**
@@ -1253,7 +1321,9 @@ inline void SET_FLOAT32(char* buf, const float val)
  */
 inline void SET_FLOAT64(char* buf, const double val)
 {
-    SET_UINT64(buf, *reinterpret_cast<const std::uint64_t*>(&val));
+    uint64_t arg;
+    std::memcpy(&arg, &val, sizeof(val));
+    SET_UINT64(buf, arg);
 }
 
 /**
