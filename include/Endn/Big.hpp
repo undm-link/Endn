@@ -108,7 +108,7 @@ inline std::uint64_t GET_UINT48(const std::uint8_t* buf)
     assert(buf);
 #ifdef ENDN_ENABLE_BSWAP
 #    ifdef ENDN_IS_BIG_ENDIAN
-    if(IS_64_ALIGNED(std::uintptr_t(buf))) 
+    if(IS_64_ALIGNED(std::uintptr_t(buf)))
     {
         uint64_t output = 0;
         std::memcpy(&output, buf, 6);
