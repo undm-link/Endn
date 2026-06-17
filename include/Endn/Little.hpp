@@ -171,9 +171,7 @@ inline int8_t GET_INT8(const std::uint8_t* buf)
 inline int16_t GET_INT16(const std::uint8_t* buf)
 {
     const std::uint16_t value = GET_UINT16(buf);
-    std::int16_t output;
-    std::memcpy(&output, &value, sizeof(value));
-    return output;
+    return *reinterpret_cast<const int16_t*>(&value);
 }
 
 /**
@@ -184,9 +182,7 @@ inline int16_t GET_INT16(const std::uint8_t* buf)
 inline int32_t GET_INT32(const std::uint8_t* buf)
 {
     const std::uint32_t value = GET_UINT32(buf);
-    std::int32_t output;
-    std::memcpy(&output, &value, sizeof(value));
-    return output;
+    return *reinterpret_cast<const int32_t*>(&value);
 }
 
 /**
@@ -198,9 +194,7 @@ inline int32_t GET_INT32(const std::uint8_t* buf)
 inline int64_t GET_INT48(const std::uint8_t* buf)
 {
     const std::uint64_t value = GET_UINT64(buf);
-    std::int64_t output;
-    std::memcpy(&output, &value, sizeof(value));
-    return output;
+    return *reinterpret_cast<const int64_t*>(&value);
 }
 
 /**
@@ -211,9 +205,7 @@ inline int64_t GET_INT48(const std::uint8_t* buf)
 inline int64_t GET_INT64(const std::uint8_t* buf)
 {
     const std::uint64_t value = GET_UINT64(buf);
-    std::int64_t output;
-    std::memcpy(&output, &value, sizeof(value));
-    return output;
+    return *reinterpret_cast<const int64_t*>(&value);
 }
 
 /**
